@@ -61,7 +61,7 @@ function smile_prompt
     # Git branch color
     GB="${COOLPINK}"
     #hostname color
-    HC="${COOLBLUE}"
+    HC="${CYAN}"
     #regular color
     RC="${COOLGRAY}"
     #default color
@@ -97,11 +97,10 @@ function clean_stale_branches() {
 }
 
 # GIT stuff #############################################
-
-function fuck () {
+function frick () {
     TF_PYTHONIOENCODING=$PYTHONIOENCODING;
     export TF_SHELL=bash;
-    export TF_ALIAS=fuck;
+    export TF_ALIAS=frick;
     export TF_SHELL_ALIASES=$(alias);
     export TF_HISTORY=$(fc -ln -10);
     export PYTHONIOENCODING=utf-8;
@@ -110,10 +109,24 @@ function fuck () {
     ) && eval "$TF_CMD";
     unset TF_HISTORY;
     export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
-    history -s $TF_CMD;
+    history -s "$TF_CMD";
 }
+
 
 source ~/.git-completion.bash
 
 # Don't remember why I need this
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Connect to UTDC VPN
+conn_vpn() {
+    networksetup -connectpppoeservice "UTDC VPN"
+    until networksetup -showpppoestatus "UTDC VPN" | grep -q "connected"; do
+        sleep 1
+    done
+    echo "Connected to UTDC VPN"
+}
+cddns() {
+    cd ~/hs/hs_static_dns/
+}
+PATH=$(pyenv root)/shims:$PATH
